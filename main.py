@@ -7,7 +7,7 @@ Description_PAPEREE's_File_Bed  ｜ 描述_纸片君ee的文件小站
 '''
 
 from flask import Flask,Response,request,redirect,render_template
-from flask_cors import CORS
+from flask_cors import CORS,cross_origin
 from os import path,makedirs,walk,getcwd
 from re import sub
 from time import strftime,localtime
@@ -36,13 +36,14 @@ if not config["pwd"]:
     exit(0)
 
 app=Flask(str(id("uwu")),static_folder="/",static_url_path="/")
-CORS(app)
+CORS(app,resources=r"/*")
 
 @app.errorhandler(Exception)
 def error(e):
     return render_template("4n0n4me.html"),404
 
 @app.route("/")
+@cross_origin(methods=method,headers=["Content-Type"],supports_credentials=True)
 def index():
     if request.args:
         return redirect(request.base_url)
@@ -82,15 +83,12 @@ def upload():
         makedirs(file_path,exist_ok=True)
         file.save(new_path)
         path_list.append(new_path)
-        save("record.log","a+",f"{time}｜{ip}｜{new_path}\n")
+        save("record.log","a+",f"{time}｜{ip}｜/{new_path}\n")
 
     return result(1,"文件上传成功",{"path":path_list,"time":time})
 
 @app.route("/detail",methods=method)
 def detail():
-    if pull("pass")!=config["pwd"]:
-        return result(0,"无效的管理员密码")
-
     data=list()
 
     for root,dirs,files in walk(f"{getcwd()}/templates"):
@@ -146,4 +144,4 @@ def rickroll():
     return redirect("https://1145.s3.ladydaily.com/rock.mp4")
 
 if __name__=="__main__":
-    app.run(host="127.0.0.1",port=1919,debug=True,threaded=True) # 38.60.36.109/127.0.0.1
+    app.run(host="127.0.0.1",port=1919,debug=True,threaded=True)
