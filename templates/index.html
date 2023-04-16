@@ -33,25 +33,25 @@
                 visibility:hidden;
             }
             input[type="checkbox"]+label {
-                display: inline-block;
-                vertical-align: -2px;
-                width: 10px;
-                height: 10px;
-                cursor: pointer;
-                background: white;
-                border: solid 2px #999;
-                margin-right: 66px;
-                text-indent: -1px;
-                margin-left: -18px;
-                overflow: hidden;
-                border-radius: 2px;
+                display:inline-block;
+                vertical-align:-2px;
+                width:10px;
+                height:10px;
+                cursor:pointer;
+                background:white;
+                border:solid 2px #999;
+                margin-right:66px;
+                text-indent:-1px;
+                margin-left:-18px;
+                overflow:hidden;
+                border-radius:2px;
             }
             input[type="checkbox"]:checked+label::before {
-                content: "uwu";
-                display: inline-block;
-                text-align: center;
-                font-size: 18px;
-                background: #CCDDEF;
+                content:"uwu";
+                display:inline-block;
+                text-align:center;
+                font-size:18px;
+                background:#CCDDEF;
             }
             .grey {
                 background-color:#EEE;
@@ -73,8 +73,8 @@
             }
             .grey,.blue,.yellow,.pink,.green,.orange {
                 border-radius:20px;
-                transition: 0.6s ease all;
-                padding: 2px 10px;
+                transition:0.6s ease all;
+                padding:2px 10px;
             }
             .pushFile {
                 border:2.5px solid #999;
@@ -101,15 +101,15 @@
                 margin-top:8px;
             }
             #confirm_,#confirm__ {
-                display: none;
-                animation: op 0.4s;
+                display:none;
+                animation:op 0.4s;
             }
             #confirm:hover>#confirm_,#confirm_:hover,#confirm_:hover>#confirm__,#confirm__:hover>#confirm_,#confirm__:hover {
-                display: inline-block;
+                display:inline-block;
             }
             #confirm__:hover {
-                cursor: pointer;
-                text-decoration: underline;
+                cursor:pointer;
+                text-decoration:underline;
             }
             #fileInfo,#fileBox,#setting {
                 background-color:white;
@@ -120,7 +120,7 @@
                 padding:12px;
                 cursor:default;
                 transform:rotate(-0.6deg);
-                transition: 0.4s ease all;
+                transition:0.4s ease all;
             }
             #fileInfo p,a {
                 color:#789;
@@ -146,7 +146,7 @@
             }
             #fileBox:hover {
                 border:2.5px solid #999;
-                content: "uwu";
+                content:"uwu";
             }
             #dragFile {
                 border-radius:8px;
@@ -156,7 +156,7 @@
                 margin:10px;
                 padding:20px;
                 cursor:pointer;
-                transition: 0.4s ease all;
+                transition:0.4s ease all;
             }
             #dragFile:hover {
                 border:2px dashed #AAA;
@@ -171,7 +171,7 @@
                 color:#8F9AAF;
             }
             #dragFile>p:hover::before,#dragFile>p:hover::after {
-                content: " - ";
+                content:" - ";
             }
             #dragFile i {
                 color:#999;
@@ -195,15 +195,15 @@
                 cursor:default;
             }
             #setting {
-                color: #789;
-                font-weight: bold;
+                color:#789;
+                font-weight:bold;
             }
             @keyframes op {
                 0% {
-                    opacity: 0;
+                    opacity:0;
                 }
                 100% {
-                    opacity: 100%;
+                    opacity:100%;
                 }
             }
             @media screen and (max-width:880px) {
@@ -247,7 +247,7 @@
                 const linkBox=$("#linkBox");
                 const allowedImg=$("#img").is(":checked");
                 links.forEach((item)=>{
-                    if (allowedImg&&[".ico",".gif",".png",".jpg","jpeg"].includes(item.slice(-4))) {
+                    if (allowedImg&&[".ico",".gif",".bmp",".png",".jpg","jpeg"].includes(item.slice(-4))) {
                         linkBox.append($("<img>").attr({
                             src:url+item,
                             alt:item,
