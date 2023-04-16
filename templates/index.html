@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html manifest="demo.appcache">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0,user-scalable=no">
+        <meta name="Keywords" content="文件小站,文件床,图床,纸片君,hackchat,paper,ee,paperee,uwu">
+        <meta name="Description" content="纸片君ee的文件小站">
+        <link rel="shortcut icon" href="https://paperee.guru/fish.ico">
+        <script src="templates/jquery.min.js"></script>
+        <title>纸片君ee的文件小站｜PAPEREE</title>
+        <style>
+            * {
+                margin:0;
+                padding:0;
+                line-height:1.7;
+                font-family:"Consolas","Microsoft Yahei UI","Microsoft YaHei","Yu Gothic Medium";
+                letter-spacing:2px;
+                word-wrap:break-word;
+                word-break:break-all;
+                outline:none;
+            }
+            ::-webkit-scrollbar {
+                width:0;
+            }
+            body {
+                background-color:#fbfbfb;
+                margin:5% 20% 10% 20%;
+            }
+            input[type="file"] {
+                display:none;
+            }
+            input[type="checkbox"] {
+                visibility:hidden;
+            }
+            input[type="checkbox"]+label {
+                display: inline-block;
+                vertical-align: -2px;
+                width: 10px;
+                height: 10px;
+                cursor: pointer;
+                background: white;
+                border: solid 2px #999;
+                margin-right: 66px;
+                text-indent: -1px;
+                margin-left: -18px;
+                overflow: hidden;
+                border-radius: 2px;
+            }
+            input[type="checkbox"]:checked+label::before {
+                content: "uwu";
+                display: inline-block;
+                text-align: center;
+                font-size: 18px;
+                background: #CCDDEF;
+            }
+            .grey {
+                background-color:#EEE;
+            }
+            .blue {
+                background-color:#E4F9FD;
+            }
+            .yellow {
+                background-color:#FFFFBC;
+            }
+            .pink {
+                background-color:#FFECEC;
+            }
+            .green {
+                background-color:#D3FFD3;
+            }
+            .orange {
+                background-color:#FFEECF;
+            }
+            .grey,.blue,.yellow,.pink,.green,.orange {
+                border-radius:20px;
+                transition: 0.6s ease all;
+                padding: 2px 10px;
+            }
+            .pushFile {
+                border:2.5px solid #999;
+                border-radius:5px;
+                background-color:while;
+                padding:4px 8px;
+                font-size:16px;
+                color:#888;
+                display:inline-block;
+                cursor:pointer;
+            }
+            .pushPath {
+                border:2.5px solid #999;
+                border-radius:5px;
+                background-color:while;
+                padding:4px 8px;
+                font-size:16px;
+                color:#999;
+                width:64%;
+            }
+            .image {
+                width:100%;
+                border-radius:10px;
+                margin-top:8px;
+            }
+            #confirm_,#confirm__ {
+                display: none;
+                animation: op 0.4s;
+            }
+            #confirm:hover>#confirm_,#confirm_:hover,#confirm_:hover>#confirm__,#confirm__:hover>#confirm_,#confirm__:hover {
+                display: inline-block;
+            }
+            #confirm__:hover {
+                cursor: pointer;
+                text-decoration: underline;
+            }
+            #fileInfo,#fileBox,#setting {
+                background-color:white;
+                border-radius:8px;
+                border:2.5px solid #AABBB8;
+                width:600px;
+                margin:24px;
+                padding:12px;
+                cursor:default;
+                transform:rotate(-0.6deg);
+                transition: 0.4s ease all;
+            }
+            #fileInfo p,a {
+                color:#789;
+                margin:4px;
+            }
+            #limitInfo,#changeInfo {
+                border-bottom:2px dashed #AABBB8;
+                padding-bottom:10px;
+            }
+            #limitInfo,#changeInfo,#textBox {
+                margin:6px;
+                transform:rotate(-0.2deg);
+            }
+            #limitInfo i {
+                color:#878;
+            }
+            #changeInfo,#textBox {
+                padding-top:10px;
+            }
+            #fileBox {
+                height:400px;
+                text-align:center;
+            }
+            #fileBox:hover {
+                border:2.5px solid #999;
+                content: "uwu";
+            }
+            #dragFile {
+                border-radius:8px;
+                border:2px dashed #BBCFCA;
+                width:540px;
+                height:340px;
+                margin:10px;
+                padding:20px;
+                cursor:pointer;
+                transition: 0.4s ease all;
+            }
+            #dragFile:hover {
+                border:2px dashed #AAA;
+            }
+            #dragFile h1 {
+                margin-top:24px;
+                font-size:96px;
+                color:#8F9FAA;
+            }
+            #dragFile p {
+                font-size:22px;
+                color:#8F9AAF;
+            }
+            #dragFile>p:hover::before,#dragFile>p:hover::after {
+                content: " - ";
+            }
+            #dragFile i {
+                color:#999;
+            }
+            #ee {
+                position:absolute;
+                left:410px;
+                top:360px;
+                font-size:18px;
+                color:#BA9;
+            }
+            #uploadForm {
+                width:600px;
+                margin:24px;
+                transform:rotate(-0.6deg);
+            }
+            #uploadForm span {
+                font-size:18px;
+                color:#789;
+                margin-left:24px;
+                cursor:default;
+            }
+            #setting {
+                color: #789;
+                font-weight: bold;
+            }
+            @keyframes op {
+                0% {
+                    opacity: 0;
+                }
+                100% {
+                    opacity: 100%;
+                }
+            }
+            @media screen and (max-width:880px) {
+                body {
+                    margin:0;
+                }
+            }
+            @media screen and (max-width:660px) {
+                .pushPath {
+                    width:50%;
+                }
+                #fileInfo,#fileBox,#uploadForm,#setting {
+                    width:88%;
+                }
+                #dragFile {
+                    width:87%;
+                }
+                #ee {
+                    left:auto;
+                    right:10%;
+                }
+            }
+        </style>
+        <script>
+            // 返回发送请求的包
+            function request(urlLink,formData) {
+                return {
+                    url:urlLink,
+                    data:formData,
+                    type:"POST",
+                    cache:false,
+                    contentType:false,
+                    processData:false,
+                    success:(response)=>reload(response),
+                    error:(jqXHR,textStatus,errorThrown)=>console.log(`${textStatus}:${errorThrown}`),
+                };
+            };
+            // 将链接列表上传到页面上
+            function upload(links) {
+                const url=document.URL.split("?")[0];
+                const linkBox=$("#linkBox");
+                const allowedImg=$("#img").is(":checked");
+                links.forEach((item)=>{
+                    if (allowedImg&&[".ico",".gif",".png",".jpg","jpeg"].includes(item.slice(-4))) {
+                        linkBox.append($("<img>").attr({
+                            src:url+item,
+                            alt:item,
+                            class:"image",
+                        }),$("<br>"));
+                    } else {
+                        linkBox.append($("<a></a>").attr({
+                            href:url+item,
+                            target:"_blank",
+                        }).text(`/${item}`),$("<br>"));
+                    };
+                });
+            };
+            // 上传文件并更新页面
+            function reload(response) {
+                console.log(response);
+                $(`#text`).text((response.code?"uwu ":"quq ")+response.text);
+                $("#file").val(null).trigger("change");
+                if (response.code) {
+                    upload(paths=response.path);
+                    saveStorage("history"," "+paths.join(" "),false);
+                };
+            };
+            // 页面加载后立马执行=>阻止浏览器默认行为
+            $(document).ready(()=>{
+                $(".upload").submit(function(event) {
+                    event.preventDefault();
+                    const formData=new FormData(this);
+                    const fileList=$("#file")[0].files;
+                    for (let i=0;i<fileList.length;i++) {
+                        formData.append("files[]",fileList[i]);
+                    };
+                    $.ajax(request("upload",formData));
+                });
+            });
+        </script>
+    </head>
+    <body onselectstart="return false">
+        <div id="fileBox">
+            <div id="dragFile" class="upload" onclick="fileBrowser()">
+                <h1>υωυ</h1>
+                <p>把文件拖动至此处</p>
+                <p>或<span><i class="grey">点我</i></span>上传文件</p>
+                <span id="ee">BY.PAPEREE(ee)</span>
+            </div>
+        </div>
+        <div id="fileInfo">
+            <div id="limitInfo">
+                <p><b class="blue">README.md</b></p>
+                <p><i>上限大小</i>：{{size_mb}}MB({{size_gb}}GB) <i>上限个数</i>：{{num}}</p>
+                <p><i>文件类型</i>：{{type}}</p>
+            </div>
+            <div id="changeInfo">
+                <p><b class="yellow">试着选择文件吧？</b></p>
+                <p>uwu <span><i id="fileName">什么都没有……</i></span></p>
+            </div>
+            <div id="textBox">
+                <p><b class="pink">上传后看看这里！</b></p>
+                <p id="text">uwu 链接可以直接点的</p>
+                <div id="linkBox"></div>
+            </div>
+        </div>
+        <div id="setting">
+            <span class="green">显示图片</span>
+            <input id="img" type="checkbox"><label for="img"></label>
+            <span id="confirm" class="orange">清空历史纪录？ <span id="confirm_">真的吗？ <span id="confirm__" onclick="clearHistory()">我确定！</span></span></span>
+        </div>
+        <form id="uploadForm" class="upload">
+            <input id="file" type="file" name="file" accept="{{type}}" multiple>
+            <input class="pushPath" type="text" name="path" maxlength="24" placeholder="自定义文件夹 留空默认">
+            <label for="file" class="pushFile">Choice</label>
+            <button type="submit" class="pushFile">Upload</button>
+        </form>
+        <script>
+            // 触发文件选择界面
+            function fileBrowser() {
+                $("#file").click();
+            };
+            // 获取本地存储
+            function getStorage(key) {
+                return localStorage.getItem(key);
+            };
+            // 更新本地存储
+            function saveStorage(key,value,mode=true) {
+                mode?localStorage[key]=value:localStorage[key]+=value;
+            };
+            // 移除本地存储
+            function clearStorage(key) {
+                localStorage.removeItem(key);
+            };
+            // 清除历史纪录
+            function clearHistory() {
+                clearStorage("history");
+                $("#linkBox").slideUp("slow","linear").empty().slideDown();
+            };
+            // 读取历史纪录
+            if (strLinks=getStorage("history")) {
+                upload(strLinks.split(" "));
+            };
+            // 拖放文件｜阻止浏览器默认行为=>更新选择文件到页面
+            $("#dragFile").on("dragover",function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+            }).on("drop",function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                $("#file").prop("files",e.originalEvent.dataTransfer.files).trigger("change");
+            });
+            // 批量为勾选框添加事件=>读取存储｜变更触发
+            $("input[type='checkbox']").each(function() {
+                $(this).prop("checked",JSON.parse(getStorage(id=$(this).attr("id")))).change(function(e) {
+                    saveStorage(id,!!$(this).prop("checked"));
+                });
+            });
+            // 更新选择文件到页面
+            $("#file").on("change",function() {
+                $("#fileName").text(this.files.length>0?[...this.files].map(file=>file.name).join(","):"什么都没有……");
+            });
+        </script>
+    </body>
+</html>
