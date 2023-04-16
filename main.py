@@ -125,14 +125,15 @@ def server():
     for cmd in request.args:
         get_cmd=pull(cmd)
 
-        if cmd=="add" and get_cmd not in types:
-            types.append(get_cmd)
+        if get_cmd:
+            if cmd=="add" and get_cmd not in types:
+                types.append(get_cmd)
 
-        elif cmd=="rm" and get_cmd in types:
-            types.pop(types.index(get_cmd))
+            elif cmd=="rm" and get_cmd in types:
+                types.pop(types.index(get_cmd))
 
-        elif cmd in config:
-            config[cmd]=get_cmd
+            elif cmd in config:
+                config[cmd]=get_cmd
 
     config["type"]=list(set(config["type"]))
     save("config.json","w",str(config))
